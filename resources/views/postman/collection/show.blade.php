@@ -119,7 +119,7 @@
                                 @if (!empty($request['body']['raw']))
                                     <div>
                                         <span class="font-medium text-gray-700">Body:</span>
-                                        <pre class="bg-gray-100 text-sm text-gray-800 mt-1 p-3 rounded-md overflow-auto whitespace-pre-wrap">{!! \App\Utils\JsonUtils::prettyJson($request['body']['raw']) !!}</pre>
+                                        <pre class="bg-gray-100 text-sm text-gray-800 mt-1 p-3 rounded-md overflow-auto whitespace-pre-wrap">{!! \App\Http\Controllers\Postman\JsonUtils::prettyJson($request['body']['raw']) !!}</pre>
                                     </div>
                                 @endif
 
