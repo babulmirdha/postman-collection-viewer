@@ -2,7 +2,7 @@
 
 **Turn Your Postman Collections into Interactive API Docs.**
 
-`postman-collection-viewer` is an open-source Laravel-based tool that transforms your Postman collections into clean, navigable, and interactive API documentation — much like Swagger UI, but powered by Postman’s export format.
+`Postman Collection Viewer` is an open-source Laravel-based tool that transforms your Postman collections into clean, navigable, and interactive API documentation — much like Swagger UI, but powered by Postman’s export format.
 
 ---
 
