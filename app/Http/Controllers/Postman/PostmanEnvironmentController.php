@@ -14,12 +14,12 @@ class PostmanEnvironmentController extends Controller
         $json        = Storage::get('postman/environment.json');
         $environment = json_decode($json, true);
 
-        return view('postman.environment.show', compact('environment'));
+        return view('postman.environments.show', compact('environment'));
     }
 
     public function uploadForm()
     {
-        return view('postman.environment.upload');
+        return view('postman.environments.upload');
     }
 
     public function storeFile(Request $request)
@@ -54,7 +54,7 @@ class PostmanEnvironmentController extends Controller
         $json        = Storage::get('postman/environment.json');
         $environment = json_decode($json, true);
 
-        return view('postman.environment.edit', compact('environment'));
+        return view('postman.environments.edit', compact('environment'));
     }
 
     public function updateVariables(Request $request)

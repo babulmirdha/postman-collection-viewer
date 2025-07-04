@@ -30,7 +30,7 @@ class PostmanCollectionController extends Controller
         }
 
         // Return to view or response
-        return view('postman.collection.index', compact('collections'));
+        return view('postman.collections.index', compact('collections'));
     }
 
     public function show($id, Request $request)
@@ -69,12 +69,12 @@ class PostmanCollectionController extends Controller
         $selectedIndex = $request->query('folder', 0);
         $selectedGroup = $groups[$selectedIndex] ?? null;
 
-        return view('postman.collection.show', compact('id', 'groups', 'selectedIndex', 'selectedGroup', 'base_url', 'token'));
+        return view('postman.collections.show', compact('id', 'groups', 'selectedIndex', 'selectedGroup', 'base_url', 'token'));
     }
 
     public function uploadForm()
     {
-        return view('postman.collection.upload');
+        return view('postman.collections.upload');
     }
 
     public function storeFile(Request $request)
