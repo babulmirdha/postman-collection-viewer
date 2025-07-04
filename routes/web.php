@@ -12,11 +12,11 @@ Route::get('/', function () {
 
 //Postman collection routes
 
-Route::get('/', [PostmanCollectionController::class, 'show'])->name('home');
+Route::get('/', [PostmanCollectionController::class, 'index'])->name('home');
 
-Route::get('postman', [PostmanCollectionController::class, 'show'])->name('postman.index');
+Route::get('postman', [PostmanCollectionController::class, 'index'])->name('postman.index');
 
-Route::get('postman/collection', [PostmanCollectionController::class, 'show'])->name('postman.collection.index');
+Route::get('postman/collection', [PostmanCollectionController::class, 'index'])->name('postman.collection.index');
 
 Route::get('/postman/collection/upload', [PostmanCollectionController::class, 'uploadForm'])->name('postman.collection.upload');
 

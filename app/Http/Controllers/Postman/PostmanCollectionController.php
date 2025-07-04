@@ -1,13 +1,39 @@
 <?php
-
 namespace App\Http\Controllers\Postman;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Controller;
 
 class PostmanCollectionController extends Controller
 {
+
+    public function index()
+    {
+        $directory = 'postman';
+        $files     = Storage::files($directory);
+
+        $collections = [];
+
+        foreach ($files as $file) {
+            if (str_ends_with($file, '.postman_collection.json')) {
+                $json = Storage::get($file);
+                $data = json_decode($json, true);
+
+                if (isset($data['info']['name'])) {
+                    $collections[] = [
+                        'name' => $data['info']['name'],
+                        'path' => $file,
+                    ];
+                }
+            }
+        }
+
+
+
+        // Return to view or response
+        return view('postman.collection.index', compact('collections'));
+    }
 
     public function show(Request $request)
     {
@@ -15,14 +41,12 @@ class PostmanCollectionController extends Controller
 
         $environment = json_decode(Storage::get('postman/environment.json'), true);
 
-
         $base_url = $environment['values']['base_url']['value'] ?? 'http://127.0.0.1:8000';
-        $token = $environment['values']['token']['value'] ?? '';
-
+        $token    = $environment['values']['token']['value'] ?? '';
 
         $groups = [];
         try {
-            if (!isset($collection['item']) || !is_array($collection['item'])) {
+            if (! isset($collection['item']) || ! is_array($collection['item'])) {
                 throw new \Exception('Invalid collection format');
             }
         } catch (\Exception $e) {
@@ -64,8 +88,9 @@ class PostmanCollectionController extends Controller
 
         $file = $request->file('postman_collection');
 
-        // Save permanently
-        $path = $file->storeAs('postman', 'collection.json'); // storage/app/postman/collection.json
+        // Use the original file name
+        $originalName = $file->getClientOriginalName();
+        $path         = $file->storeAs('postman', $originalName); // storage/app/postman/{original_filename}.json
 
         // Optional: parse and validate content
         $json       = Storage::get($path);
@@ -77,7 +102,6 @@ class PostmanCollectionController extends Controller
 
         return redirect()->route('postman.collection.index')->with([
             'success' => 'Postman collection uploaded successfully.',
-            // You can also store it in cache or session if needed
         ]);
     }
 
@@ -91,7 +115,7 @@ class PostmanCollectionController extends Controller
 
         $file = $request->file('postman_environment');
 
-        // Save permanently
+                                                               // Save permanently
         $path = $file->storeAs('postman', 'environment.json'); // storage/app/postman/environment.json
 
         // Optional: validate structure
