@@ -100,8 +100,8 @@ This project is open-sourced under the [MIT license](LICENSE).
 ## 👨‍💻 Author
 
 **Babul Mirdha**
-🔗 [LinkedIn](https://linkedin.com/in/your-profile)
-📫 [babulmirdha@example.com](mailto:babulmirdha@example.com) (update this)
+🔗 [LinkedIn](https://linkedin.com/in/babulmirdha)
+📫 [babul.mirdha@alorferi.com](mailto:babul.mirdha@alorferi.com) 
 
 ---
 
