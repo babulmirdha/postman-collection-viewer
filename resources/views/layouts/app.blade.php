@@ -11,9 +11,9 @@
 
     <header class="bg-white shadow-md py-4 px-6">
         <div class="flex items-center justify-between">
-            <h1 class="text-2xl font-bold text-indigo-600">  <a href="{{ route('postman.collection.index') }}" class="text-indigo-600 hover:underline font-medium">API Documentations</a> </h1>
+            <h1 class="text-2xl font-bold text-indigo-600">  <a href="{{ route('postman.collections.index') }}" class="text-indigo-600 hover:underline font-medium">API Documentations</a> </h1>
             <div>
-                <a href="{{ route('postman.environment.index') }}" class="text-indigo-600 hover:underline font-medium">Settings</a>
+                <a href="{{ route('postman.environments.index') }}" class="text-indigo-600 hover:underline font-medium">Settings</a>
             </div>
         </div>
     </header>

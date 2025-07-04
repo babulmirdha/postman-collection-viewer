@@ -1,36 +1,67 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex max-w-7xl mx-auto gap-6">
+<div class="flex max-w-7xl mx-auto gap-6">
 
-        {{-- Sidebar: Fixed Navigation --}}
-        <aside class="w-64 bg-white border-r rounded p-4 shadow-md h-screen sticky top-0 overflow-y-auto">
-            <h2 class="text-lg font-bold mb-4">Folders</h2>
+    {{-- Sidebar --}}
+    <aside class="w-64 bg-white border-r rounded p-4 shadow-md h-screen sticky top-0 overflow-y-auto">
+        <h2 class="text-lg font-bold mb-4">Folders</h2>
+        {{-- You can list folders here if needed --}}
+    </aside>
 
-            </ul>
-        </aside>
+    {{-- Main Content --}}
+    <main class="flex-1 p-4">
 
-        {{-- Content Area --}}
-        <main class="flex-1">
+        @if (session('success'))
+            <div class="bg-green-100 text-green-700 p-4 rounded mb-4 border border-green-200">
+                {{ session('success') }}
+            </div>
+        @endif
 
-            @if (session('success'))
-                <div class="bg-green-100 text-green-700 p-4 rounded mb-4 border border-green-200">
-                    {{ session('success') }}
-                </div>
-            @endif
+        <h2 class="text-2xl font-semibold mb-6">Uploaded Postman Collections</h2>
 
-            <h2>Uploaded Postman Collections</h2>
-            <ul class="list-group mt-4">
-                @forelse($collections as $collection)
-                    <li class="list-group-item">
-                        <strong>{{ $collection['name'] }}</strong> <br>
-                        <small>{{ $collection['path'] }}</small>
-                    </li>
-                @empty
-                    <li class="list-group-item">No collections found.</li>
-                @endforelse
-            </ul>
+        @if($collections && count($collections))
+            <div class="space-y-4">
+                @foreach($collections as $collection)
+                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm px-6 py-4 flex items-center justify-between hover:shadow-md transition">
 
-        </main>
-    </div>
+                        {{-- Left: Collection Info --}}
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">{{ $collection['name'] }}</h3>
+                            <p class="text-xs text-gray-500 mt-1">{{ $collection['path'] }}</p>
+                        </div>
+
+                        {{-- Right: Action Buttons --}}
+                        <div class="flex gap-2 flex-wrap justify-end">
+                            <a href="{{ route('postman.collections.show', ['id' => $collection['path']]) }}"
+                               class="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">
+                                View
+                            </a>
+
+                            <a href="{{ route('postman.collections.download', ['id' => $collection['path']]) }}"
+                               class="px-4 py-1 bg-gray-600 text-white rounded hover:bg-gray-700 text-sm">
+                                Download
+                            </a>
+
+                            <form action="{{ route('postman.collections.delete', ['id' => $collection['path']]) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('Are you sure you want to delete this collection?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="text-gray-500">No collections found.</div>
+        @endif
+
+    </main>
+</div>
 @endsection

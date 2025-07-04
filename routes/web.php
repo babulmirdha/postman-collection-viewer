@@ -16,21 +16,35 @@ Route::get('/', [PostmanCollectionController::class, 'index'])->name('home');
 
 Route::get('postman', [PostmanCollectionController::class, 'index'])->name('postman.index');
 
-Route::get('postman/collection', [PostmanCollectionController::class, 'index'])->name('postman.collection.index');
+Route::get('/postman/collections/upload', [PostmanCollectionController::class, 'uploadForm'])->name('postman.collections.upload');
 
-Route::get('/postman/collection/upload', [PostmanCollectionController::class, 'uploadForm'])->name('postman.collection.upload');
+Route::post('/postman/collections/upload', [PostmanCollectionController::class, 'storeFile'])->name('postman.collections.upload');
 
-Route::post('/postman/collection/upload', [PostmanCollectionController::class, 'storeFile'])->name('postman.collection.upload');
+Route::get('postman/collections', [PostmanCollectionController::class, 'index'])->name('postman.collections.index');
+
+Route::get('postman/collections/{id}', [PostmanCollectionController::class, 'show'])->name('postman.collections.show');
+
+Route::get('/postman/collections/{id}', [PostmanCollectionController::class, 'show'])->name('postman.collections.show');
+Route::get('/postman/collections/{id}/download', [PostmanCollectionController::class, 'download'])->name('postman.collections.download');
+Route::delete('/postman/collections/{id}', [PostmanCollectionController::class, 'destroy'])->name('postman.collections.delete');
+// Route::get('/postman/collections/{id}/edit', [PostmanCollectionController::class, 'edit'])->name('postman.collections.edit');
+// Route::post('/postman/collections/{id}/update', [PostmanCollectionController::class, 'update'])->name('postman.collections.update');
+// Route::get('/postman/collections/{id}/run', [PostmanCollectionController::class, 'run'])->name('postman.collections.run');
+// Route::get('/postman/collections/{id}/run/{folder}', [PostmanCollectionController::class, 'runFolder'])->name('postman.collections.run-folder');
+
+
+
+
 
 Route::post('/postman/test', [PostmanTestController::class, 'run'])->name('postman.test');
 
 
 //Postman environment routes
-Route::get('postman/environment', [PostmanEnvironmentController::class, 'show'])->name('postman.environment.index');
+Route::get('postman/environments', [PostmanEnvironmentController::class, 'show'])->name('postman.environments.index');
 
-Route::get('/postman/environment/upload', [PostmanEnvironmentController::class, 'uploadForm'])->name('postman.environment.upload');
+Route::get('/postman/environments/upload', [PostmanEnvironmentController::class, 'uploadForm'])->name('postman.environments.upload');
 
-Route::post('/postman/environment/upload', [PostmanEnvironmentController::class, 'storeFile'])->name('postman.environment.upload');
+Route::post('/postman/environments/upload', [PostmanEnvironmentController::class, 'storeFile'])->name('postman.environments.upload');
 
-Route::get('/postman/environment/edit-variables', [PostmanEnvironmentController::class, 'editVariables'])->name('postman.environment.edit-variables');
-Route::post('/postman/environment/update-variables', [PostmanEnvironmentController::class, 'updateVariables'])->name('postman.environment.update-variables');
+Route::get('/postman/environments/edit-variables', [PostmanEnvironmentController::class, 'editVariables'])->name('postman.environments.edit-variables');
+Route::post('/postman/environments/update-variables', [PostmanEnvironmentController::class, 'updateVariables'])->name('postman.environments.update-variables');

@@ -44,7 +44,7 @@ class PostmanEnvironmentController extends Controller
             return back()->withErrors(['postman_environment' => 'Invalid Postman environment JSON.']);
         }
 
-        return redirect()->route('postman.environment.index')->with([
+        return redirect()->route('postman.environments.index')->with([
             'success' => 'Postman environment uploaded successfully.',
         ]);
     }
@@ -75,7 +75,7 @@ class PostmanEnvironmentController extends Controller
 
         Storage::put('postman/environment.json', json_encode($environment, JSON_PRETTY_PRINT));
 
-        return redirect()->route('postman.environment.index')->with('success', 'Environment updated successfully.');
+        return redirect()->route('postman.environments.index')->with('success', 'Environment updated successfully.');
     }
 
 }

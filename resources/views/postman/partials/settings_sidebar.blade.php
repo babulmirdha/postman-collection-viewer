@@ -3,7 +3,7 @@
         <ul class="space-y-2">
 
              <li>
-                <a href="{{ route('postman.collection.index') }}"
+                <a href="{{ route('postman.collections.index') }}"
                    class="block px-3 py-2 rounded-md font-semibold text-indigo-700 hover:bg-indigo-100">
                     Apis
                 </a>
@@ -11,7 +11,7 @@
 
 
              <li>
-                <a href="{{ route('postman.environment.index') }}"
+                <a href="{{ route('postman.environments.index') }}"
                    class="block px-3 py-2 rounded-md font-semibold text-indigo-700 hover:bg-indigo-100">
                     Environment Variables
                 </a>
@@ -19,14 +19,14 @@
 
 
              <li>
-                <a href="{{ route('postman.collection.upload') }}"
+                <a href="{{ route('postman.collections.upload') }}"
                    class="block px-3 py-2 rounded-md font-semibold text-indigo-700 hover:bg-indigo-100">
                    Upload Collection
                 </a>
             </li>
 
                 <li>
-                <a href="{{ route('postman.environment.upload') }}"
+                <a href="{{ route('postman.environments.upload') }}"
                    class="block px-3 py-2 rounded-md font-semibold text-indigo-700 hover:bg-indigo-100">
                    Upload Environment
                 </a>

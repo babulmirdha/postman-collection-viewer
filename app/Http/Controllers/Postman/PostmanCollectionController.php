@@ -23,21 +23,20 @@ class PostmanCollectionController extends Controller
                 if (isset($data['info']['name'])) {
                     $collections[] = [
                         'name' => $data['info']['name'],
-                        'path' => $file,
+                        'path' => basename($file),
                     ];
                 }
             }
         }
 
-
-
         // Return to view or response
         return view('postman.collection.index', compact('collections'));
     }
 
-    public function show(Request $request)
+    public function show($id, Request $request)
     {
-        $collection = json_decode(Storage::get('postman/collection.json'), true);
+
+        $collection = json_decode(Storage::get("postman/$id"), true);
 
         $environment = json_decode(Storage::get('postman/environment.json'), true);
 
@@ -50,7 +49,7 @@ class PostmanCollectionController extends Controller
                 throw new \Exception('Invalid collection format');
             }
         } catch (\Exception $e) {
-            return redirect()->route('postman.collection.upload')->withErrors(['postman_collection' => 'Invalid Postman collection format.']);
+            return redirect()->route('postman.collections.upload')->withErrors(['postman_collection' => 'Invalid Postman collection format.']);
         }
 
         foreach ($collection['item'] as $item) {
@@ -70,7 +69,7 @@ class PostmanCollectionController extends Controller
         $selectedIndex = $request->query('folder', 0);
         $selectedGroup = $groups[$selectedIndex] ?? null;
 
-        return view('postman.collection.show', compact('groups', 'selectedIndex', 'selectedGroup', 'base_url', 'token'));
+        return view('postman.collection.show', compact('id', 'groups', 'selectedIndex', 'selectedGroup', 'base_url', 'token'));
     }
 
     public function uploadForm()
@@ -80,8 +79,9 @@ class PostmanCollectionController extends Controller
 
     public function storeFile(Request $request)
     {
+
         $request->validate([
-            'postman_collection' => 'required|file|mimes:json|max:2048',
+            'postman_collection' => 'required|file|max:2048',
         ], [], [
             'postman_collection' => 'Postman Collection File',
         ]);
@@ -100,34 +100,32 @@ class PostmanCollectionController extends Controller
             return back()->withErrors(['postman_collection' => 'Invalid Postman collection JSON.']);
         }
 
-        return redirect()->route('postman.collection.index')->with([
+        return redirect()->route('postman.collections.index')->with([
             'success' => 'Postman collection uploaded successfully.',
         ]);
     }
 
-    public function storeEnvironment(Request $request)
+    public function download($id)
     {
-        $request->validate([
-            'postman_environment' => 'required|file|mimes:json|max:1024',
-        ], [], [
-            'postman_environment' => 'Postman Environment File',
-        ]);
+        $filePath = "postman/{$id}";
 
-        $file = $request->file('postman_environment');
-
-                                                               // Save permanently
-        $path = $file->storeAs('postman', 'environment.json'); // storage/app/postman/environment.json
-
-        // Optional: validate structure
-        $json        = Storage::get($path);
-        $environment = json_decode($json, true);
-
-        if (! $environment || ! isset($environment['values'])) {
-            return back()->withErrors(['postman_environment' => 'Invalid Postman environment JSON.']);
+        if (! Storage::exists($filePath)) {
+            abort(404);
         }
 
-        return redirect()->route('postman.collection.index')->with([
-            'success' => 'Postman environment uploaded successfully.',
-        ]);
+        return Storage::download($filePath);
     }
+
+    public function destroy($id)
+    {
+        $filePath = "postman/{$id}";
+
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+            return back()->with('success', 'Postman collection deleted successfully.');
+        }
+
+        return back()->withErrors(['error' => 'File not found.']);
+    }
+
 }

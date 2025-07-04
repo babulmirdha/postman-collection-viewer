@@ -22,7 +22,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('postman.collection.upload') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow border space-y-4">
+            <form action="{{ route('postman.collections.upload') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow border space-y-4">
                 @csrf
 
                 <div>

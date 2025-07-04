@@ -14,7 +14,7 @@
                     Environment Variables
                 </h3>
 
-                <a href="{{ route('postman.environment.edit-variables') }}"
+                <a href="{{ route('postman.environments.edit-variables') }}"
                    class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-md shadow-sm hover:bg-indigo-700 transition">
                     ✏️ Edit Variables
                 </a>

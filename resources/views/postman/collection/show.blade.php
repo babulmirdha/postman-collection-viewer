@@ -6,11 +6,11 @@
 
         {{-- Sidebar: Fixed Navigation --}}
         <aside class="w-64 bg-white border-r rounded p-4 shadow-md h-screen sticky top-0 overflow-y-auto">
-            <h2 class="text-lg font-bold mb-4">Folders</h2>
+            <h2 class="text-lg font-bold mb-4"> <a href="{{ route('postman.collections.index') }}">Collections</a> </h2>
             <ul class="space-y-2">
                 @foreach ($groups as $index => $group)
                     <li>
-                        <a href="{{ route('postman.collection.index', ['folder' => $index]) }}"
+                        <a href="{{ route('postman.collections.show', [ 'id' => $id, 'folder' => $index]) }}"
                             class="block px-3 py-2 rounded-md font-semibold
                               {{ $index == $selectedIndex ? 'bg-indigo-600 text-white' : 'text-indigo-700 hover:bg-indigo-100' }}">
                             {{ $group['name'] }}
