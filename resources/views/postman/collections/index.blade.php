@@ -60,16 +60,18 @@
                 <div class="space-y-4">
                     @foreach ($collections as $collection)
                         <div
-                            class="bg-white border border-gray-200 rounded-xl shadow-sm px-6 py-4 flex items-center justify-between hover:shadow-md transition">
+                            class="bg-white border border-gray-200 rounded-xl shadow-sm px-6 py-4 flex items-center justify-between hover:shadow-md transition group">
 
-                            {{-- Left: Collection Info --}}
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-800">{{ $collection['name'] }}</h3>
+                            {{-- Left: Collection Info as clickable link --}}
+                            <a href="{{ route('postman.collections.show', ['id' => $collection['path']]) }}"
+                                class="flex-1 cursor-pointer" title="View collection: {{ $collection['name'] }}">
+                                <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600">
+                                    {{ $collection['name'] }}</h3>
                                 <p class="text-xs text-gray-500 mt-1">{{ $collection['path'] }}</p>
-                            </div>
+                            </a>
 
                             {{-- Right: Action Buttons --}}
-                            <div class="flex flex-col gap-2 items-end">
+                            <div class="flex flex-col gap-2 items-end ml-6">
                                 <a href="{{ route('postman.collections.show', ['id' => $collection['path']]) }}"
                                     class="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm w-28 text-center">
                                     View
@@ -92,7 +94,6 @@
                                     </button>
                                 </form>
                             </div>
-
 
                         </div>
                     @endforeach
